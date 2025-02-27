@@ -1,0 +1,111 @@
+# Name: MUKUNDENTE Gloria
+# ID: 26687
+ 
+# WED_26687_MUKUNDENTE_Gloria_AssI
+
+## Problem Statement
+
+The current hotel reservation system faces challenges such as double bookings, inefficient data retrieval, and difficulty managing guest information. 
+A centralized hotel database reservation system is needed to streamline room availability, track guest details, manage bookings, and handle payments efficiently. 
+This system will ensure accurate reservations, improve operational efficiency, and enhance the guest experience.
+
+## The SQL Commands that has been used
+### 1. DDL (Data Definition Language):
+
+We used DDL commands to create the database tables, such as:
+CREATE TABLE: To create the necessary tables for authors, books, publishers, members, and borrowed books.
+
+```SQL
+--Create the Guests table to store guest details
+CREATE TABLE Guests (
+    guest_id INT PRIMARY KEY,               -- Unique identifier for each guest
+    first_name VARCHAR(50),                 -- First name of the guest
+    last_name VARCHAR(50),                  -- Last name of the guest
+    email VARCHAR(100),                     -- Email address of the guest
+    phone_number VARCHAR(15)                -- Phone number of the guest
+);
+```
+```SQL
+-- Create the Rooms table to store room details
+CREATE TABLE Rooms (
+    room_id INT PRIMARY KEY,                -- Unique identifier for each room
+    room_number VARCHAR(10),                -- Room number (e.g., 101, 102)
+    room_type VARCHAR(50),                  -- Type of the room (e.g., Single, Double)
+    status VARCHAR(20)                      -- Room status (e.g., available, booked, under maintenance)
+);
+```
+```SQL
+-- Create the Reservations table to store reservation details
+CREATE TABLE Reservations (
+    reservation_id INT PRIMARY KEY,         -- Unique identifier for each reservation
+    guest_id INT,                           -- Foreign key linking to the Guests table
+    room_id INT,                            -- Foreign key linking to the Rooms table
+    check_in_date DATE,                     -- Check-in date for the reservation
+    check_out_date DATE,                    -- Check-out date for the reservation
+    reservation_date DATE,                  -- The date when the reservation was made
+    FOREIGN KEY (guest_id) REFERENCES Guests(guest_id), -- Foreign key constraint on guest_id
+    FOREIGN KEY (room_id) REFERENCES Rooms(room_id)    -- Foreign key constraint on room_id
+);
+```
+```SQL
+SELECT constraint_name, table_name
+FROM user_constraints
+WHERE constraint_type='R' AND table_name='PAYMENTS';
+ALTER TABLE PAYMENTS
+DROP CONSTRAINT SYS_C008228;
+DELETE FROM SERVICES;
+```
+```SQL
+-- Create the Employees table to store hotel employee details
+CREATE TABLE Employees (
+    employee_id INT PRIMARY KEY,            -- Unique identifier for each employee
+    first_name VARCHAR(50),                 -- First name of the employee
+    last_name VARCHAR(50),                  -- Last name of the employee
+    position VARCHAR(50),                   -- Position of the employee (e.g., Manager, Housekeeping)
+    salary DECIMAL(10, 2)                   -- Salary of the employee
+);
+```
+```SQL
+-- Create the Services table to store details about services offered at the hotel
+CREATE TABLE Services (
+    service_id INT PRIMARY KEY,             -- Unique identifier for each service
+    service_name VARCHAR(50),               -- Name of the service (e.g., Spa, Dinner)
+    description VARCHAR(255),               -- Description of the service
+    price DECIMAL(10, 2)                    -- Price of the service
+);
+```
+```SQL
+-- Create the Payments table to store payment details for reservations
+CREATE TABLE Payments (
+    payment_id INT PRIMARY KEY,             -- Unique identifier for each payment
+    reservation_id INT,                     -- Foreign key linking to the Reservations table
+    payment_date DATE,                      -- Date when the payment was made
+    amount DECIMAL(10, 2),                  -- Amount paid for the reservation
+    FOREIGN KEY (reservation_id) REFERENCES Reservations(reservation_id) -- Foreign key constraint on reservation_id
+);
+```
+
+2. DML (Data Manipulation Language):
+We used DML commands to manipulate the data in the tables:
+
+INSERT: To add records to the Books, Members, and BorrowedBooks tables.
+UPDATE: To modify existing data.
+DELETE: To remove data from tables.
+3. TCL (Transaction Control Language):
+We used TCL commands to manage database transactions, ensuring data consistency:
+COMMIT: To save the changes made by the transactions.
+ROLLBACK: To undo uncommitted changes.
+
+4. Joins:
+We used JOIN operations to retrieve related data across multiple tables.
+Inner Join to get the details of books borrowed by members.
+Left Join to display members who haven’t borrowed any books.
+
+5. Subqueries:
+We used subqueries to retrieve data based on nested queries:
+Get all members who have borrowed books in the year 2024.
+
+6. DCL (Data Control Language):
+We used DCL commands to manage access control:
+GRANT: To give access privileges to a user.
+REVOKE: To remove access privileges from a user.
