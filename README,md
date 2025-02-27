@@ -11,11 +11,12 @@ This system will ensure accurate reservations, improve operational efficiency, a
 
 ## The SQL Commands that has been used
 ### 1. DDL (Data Definition Language):
+
 We used DDL commands to create the database tables, such as:
 CREATE TABLE: To create the necessary tables for authors, books, publishers, members, and borrowed books.
 
 ```SQL
--- Create the Guests table to store guest details
+--Create the Guests table to store guest details
 CREATE TABLE Guests (
     guest_id INT PRIMARY KEY,               -- Unique identifier for each guest
     first_name VARCHAR(50),                 -- First name of the guest
@@ -23,6 +24,8 @@ CREATE TABLE Guests (
     email VARCHAR(100),                     -- Email address of the guest
     phone_number VARCHAR(15)                -- Phone number of the guest
 );
+```
+```SQL
 -- Create the Rooms table to store room details
 CREATE TABLE Rooms (
     room_id INT PRIMARY KEY,                -- Unique identifier for each room
@@ -30,6 +33,8 @@ CREATE TABLE Rooms (
     room_type VARCHAR(50),                  -- Type of the room (e.g., Single, Double)
     status VARCHAR(20)                      -- Room status (e.g., available, booked, under maintenance)
 );
+```
+```SQL
 -- Create the Reservations table to store reservation details
 CREATE TABLE Reservations (
     reservation_id INT PRIMARY KEY,         -- Unique identifier for each reservation
@@ -41,13 +46,16 @@ CREATE TABLE Reservations (
     FOREIGN KEY (guest_id) REFERENCES Guests(guest_id), -- Foreign key constraint on guest_id
     FOREIGN KEY (room_id) REFERENCES Rooms(room_id)    -- Foreign key constraint on room_id
 );
+```
+```SQL
 SELECT constraint_name, table_name
 FROM user_constraints
 WHERE constraint_type='R' AND table_name='PAYMENTS';
 ALTER TABLE PAYMENTS
 DROP CONSTRAINT SYS_C008228;
 DELETE FROM SERVICES;
-
+```
+```SQL
 -- Create the Employees table to store hotel employee details
 CREATE TABLE Employees (
     employee_id INT PRIMARY KEY,            -- Unique identifier for each employee
@@ -56,6 +64,8 @@ CREATE TABLE Employees (
     position VARCHAR(50),                   -- Position of the employee (e.g., Manager, Housekeeping)
     salary DECIMAL(10, 2)                   -- Salary of the employee
 );
+```
+```SQL
 -- Create the Services table to store details about services offered at the hotel
 CREATE TABLE Services (
     service_id INT PRIMARY KEY,             -- Unique identifier for each service
@@ -63,6 +73,8 @@ CREATE TABLE Services (
     description VARCHAR(255),               -- Description of the service
     price DECIMAL(10, 2)                    -- Price of the service
 );
+```
+```SQL
 -- Create the Payments table to store payment details for reservations
 CREATE TABLE Payments (
     payment_id INT PRIMARY KEY,             -- Unique identifier for each payment
