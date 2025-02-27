@@ -17,7 +17,7 @@ This system will ensure accurate reservations, improve operational efficiency, a
 ### 1. DDL (Data Definition Language):
 
 We used DDL commands to create the database tables, such as:
-CREATE TABLE: To create the necessary tables for authors, books, publishers, members, and borrowed books.
+CREATE TABLE: To create the necessary tables for guests, rooms, reservation, Employee, Payments and Services.
 
 ```SQL
 --Create the Guests table to store guest details
@@ -145,7 +145,8 @@ VALUES (1, 1, TO_DATE('2025-02-25', 'YYYY-MM-DD'), 500);
 
 
 ### 3. TCL (Transaction Control Language):
-We used TCL commands to manage database transactions, ensuring data consistency:
+We used TCL (Transaction Control Language) commands to manage database transactions, ensuring data consistency:
+
 COMMIT: To save the changes made by the transactions.
 ROLLBACK: To undo uncommitted changes.
 
@@ -167,11 +168,8 @@ ROLLBACK;
 ![rollback](https://github.com/user-attachments/assets/5e8beecb-e21d-48b0-86bf-8c7b5aa454cc)
 
 
-
 ### 5. Joins:
 We used JOIN operations to retrieve related data across multiple tables.
-Inner Join to get the details of books borrowed by members.
-Left Join to display members who haven’t borrowed any books.
 
 ```SQL
 SELECT r.reservation_id, g.first_name, g.last_name, rm.room_number, r.check_in_date, r.check_out_date
@@ -251,11 +249,15 @@ SELECT * FROM (
 ![join](https://github.com/user-attachments/assets/9ba0149c-c167-4722-9c84-e50f92054428)
 
 
-6. Subqueries:
+### 6. Subqueries:
 We used subqueries to retrieve data based on nested queries:
-Get all members who have borrowed books in the year 2024.
+Get all members who have made reservations in the year.
 
-7. DCL (Data Control Language):
-We used DCL commands to manage access control:
-GRANT: To give access privileges to a user.
-REVOKE: To remove access privileges from a user.
+```SQL
+select * from Guests;
+select * from Rooms;
+select * from Reservations;
+select * from Employees;
+select * from Payment;
+select * from Services;
+```
