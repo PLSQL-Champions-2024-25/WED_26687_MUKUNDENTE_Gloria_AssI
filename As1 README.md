@@ -8,6 +8,10 @@
 The current hotel reservation system faces challenges such as double bookings, inefficient data retrieval, and difficulty managing guest information. 
 A centralized hotel database reservation system is needed to streamline room availability, track guest details, manage bookings, and handle payments efficiently. 
 This system will ensure accurate reservations, improve operational efficiency, and enhance the guest experience.
+## Entity Relational Diagram/ Conceptual Diagram
+
+![Screenshot 2025-02-27 102021](https://github.com/user-attachments/assets/93eef354-ba45-4a57-bed7-85cfee74ff41)
+
 
 ## The SQL Commands that has been used
 ### 1. DDL (Data Definition Language):
@@ -85,6 +89,9 @@ CREATE TABLE Payments (
 );
 ```
 
+
+
+
 ### 2. DML (Data Manipulation Language):
 We used DML commands to manipulate the data in the tables:
 
@@ -133,6 +140,8 @@ INSERT INTO Payments (payment_id, reservation_id, payment_date, amount)
 VALUES (1, 1, TO_DATE('2025-02-25', 'YYYY-MM-DD'), 500);
 ```
 
+![Insert](https://github.com/user-attachments/assets/f2a31459-fbae-47f7-95a4-8f7145916715)
+
 
 
 ### 3. TCL (Transaction Control Language):
@@ -144,10 +153,20 @@ ROLLBACK: To undo uncommitted changes.
 ```SQL
 COMMIT;
 ```
+
+![commit](https://github.com/user-attachments/assets/423ca2d7-6451-449e-b654-be621c8d1a3b)
+
+
+
 #### ROLLBACK
-``SQL
+
+```SQL
 ROLLBACK;
 ```
+
+![rollback](https://github.com/user-attachments/assets/5e8beecb-e21d-48b0-86bf-8c7b5aa454cc)
+
+
 
 ### 5. Joins:
 We used JOIN operations to retrieve related data across multiple tables.
@@ -228,6 +247,9 @@ SELECT * FROM (
     FROM Employees e
 ) WHERE rank <= 5;
 ```
+
+![join](https://github.com/user-attachments/assets/9ba0149c-c167-4722-9c84-e50f92054428)
+
 
 6. Subqueries:
 We used subqueries to retrieve data based on nested queries:
