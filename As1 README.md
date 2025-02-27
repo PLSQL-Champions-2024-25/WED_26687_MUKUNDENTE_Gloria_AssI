@@ -255,9 +255,39 @@ Get all members who have made reservations in the year.
 
 ```SQL
 select * from Guests;
+```
+
+![Gues](https://github.com/user-attachments/assets/e4b286bd-02d0-4fcc-9b6d-fa8d63dcf3d1)
+
+```SQL
 select * from Rooms;
+```
+
+![ROOMS](https://github.com/user-attachments/assets/5e8d9d3c-1a0a-41d5-b32b-91cf3103d8c5)
+
+```SQL
 select * from Reservations;
+```
+
+![RESERVATION](https://github.com/user-attachments/assets/387ee184-5085-4fc1-97c6-1024dc0957f5)
+
+```SQL
 select * from Employees;
+```
+
+![employee](https://github.com/user-attachments/assets/c420d177-56ca-4177-a09b-a6eedc5aaccc)
+
+```SQL
 select * from Payment;
+```
+
+![payments](https://github.com/user-attachments/assets/da065871-8e7b-41f6-86fd-60adfd51a188)
+
+```SQL
 select * from Services;
 ```
+
+![Services](https://github.com/user-attachments/assets/c81b6b92-eeda-479c-bbfc-2b1895a2763d)
+
+# END!!
+
