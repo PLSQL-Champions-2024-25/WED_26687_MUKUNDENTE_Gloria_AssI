@@ -85,27 +85,155 @@ CREATE TABLE Payments (
 );
 ```
 
-2. DML (Data Manipulation Language):
+### 2. DML (Data Manipulation Language):
 We used DML commands to manipulate the data in the tables:
 
+```SQL
 INSERT: To add records to the Books, Members, and BorrowedBooks tables.
 UPDATE: To modify existing data.
 DELETE: To remove data from tables.
-3. TCL (Transaction Control Language):
+
+-- Insert guest data into the Guests table
+INSERT INTO Guests (guest_id, first_name, last_name, email, phone_number) 
+VALUES (1, 'Borah', 'Bajiji', 'borah.bajiji@email.com', '123-456-7890');   -- First guest
+
+INSERT INTO Guests (guest_id, first_name, last_name, email, phone_number) 
+VALUES (1, 'Borah', 'Bajiji', 'borah.bajiji@email.com', '123-456-7890');
+
+INSERT INTO Guests (guest_id, first_name, last_name, email, phone_number) 
+VALUES (2, 'Praise', 'Mutijima', 'praise.mutijima@email.com', '123-456-7890');
+-- Insert room data into the Rooms table
+INSERT INTO Rooms (room_id, room_number, room_type, status) 
+VALUES  (1, '101', 'Single', 'available');           -- Room 101, Single, available
+INSERT INTO Rooms (room_id, room_number, room_type, status) 
+VALUES (2, '102', 'Double', 'booked');              -- Room 102, Double, booked
+
+-- Insert reservation data into the Reservations table
+INSERT INTO Reservations (reservation_id, guest_id, room_id, check_in_date, check_out_date, reservation_date) 
+VALUES (1, 1, 1, TO_DATE('2025-03-01', 'YYYY-MM-DD'), TO_DATE('2025-03-05', 'YYYY-MM-DD'), TO_DATE('2025-02-20', 'YYYY-MM-DD'));--Reservation for guest 1
+    
+INSERT INTO Reservations (reservation_id, guest_id, room_id, check_in_date, check_out_date, reservation_date) 
+VALUES (2, 2, 2, TO_DATE('2025-03-03', 'YYYY-MM-DD'), TO_DATE('2025-03-09', 'YYYY-MM-DD'), TO_DATE('2025-02-21', 'YYYY-MM-DD')); 
+
+INSERT INTO Employees (employee_id, first_name, last_name, position, salary) 
+VALUES (1, 'Jesse', 'Kayigire', 'Manager', 3000000);    -- Housekeeping employee
+
+INSERT INTO Employees (employee_id, first_name, last_name, position, salary) 
+VALUES (2, 'Jesse', 'Kayigire', 'Manager', 3000000);    -- Manager employee
+
+-- Insert service data into the Services table
+INSERT INTO Services (service_id, service_name, description, price) 
+VALUES (1, 'Spa', 'Relaxing spa treatment', 100);       -- Spa service
+
+INSERT INTO Services (service_id, service_name, description, price) 
+VALUES (2, 'Dinner', 'Five-course dinner for two', 150); -- Dinner service
+
+-- Insert payment data into the Payments table
+INSERT INTO Payments (payment_id, reservation_id, payment_date, amount) 
+VALUES (1, 1, TO_DATE('2025-02-25', 'YYYY-MM-DD'), 500);
+```
+
+
+
+### 3. TCL (Transaction Control Language):
 We used TCL commands to manage database transactions, ensuring data consistency:
 COMMIT: To save the changes made by the transactions.
 ROLLBACK: To undo uncommitted changes.
 
-4. Joins:
+#### COMMIT the queries
+```SQL
+COMMIT;
+```
+#### ROLLBACK
+``SQL
+ROLLBACK;
+```
+
+### 5. Joins:
 We used JOIN operations to retrieve related data across multiple tables.
 Inner Join to get the details of books borrowed by members.
 Left Join to display members who haven’t borrowed any books.
 
-5. Subqueries:
+```SQL
+SELECT r.reservation_id, g.first_name, g.last_name, rm.room_number, r.check_in_date, r.check_out_date
+FROM Reservations r
+JOIN Guests g ON r.guest_id = g.guest_id
+JOIN Rooms rm ON r.room_id = rm.room_id;
+```
+```SQL
+-- Retrieve payments with reservation and guest details
+SELECT p.payment_id, p.payment_date, p.amount, g.first_name, g.last_name
+FROM Payments p
+JOIN Reservations r ON p.reservation_id = r.reservation_id
+JOIN Guests g ON r.guest_id = g.guest_id;
+```
+```SQL
+-- Retrieve employees and their services
+SELECT e.employee_id, e.first_name, e.last_name, e.position, s.service_name, s.price
+FROM Employees e
+LEFT JOIN Services s ON e.position = 'Manager';
+-- Find reservations created in the past 7 days
+SELECT * FROM Reservations
+WHERE reservation_date >= SYSDATE - 7;
+```
+```SQL
+-- Find payments made in the last 7 days
+SELECT * FROM Payments
+WHERE payment_date >= SYSDATE - 7;
+-- Get the top 5 highest-paid employees
+SELECT * FROM (
+    SELECT e.*, RANK() OVER (ORDER BY salary DESC) AS rank
+    FROM Employees e
+) WHERE rank <= 5;
+```
+```SQL
+-- Get the top 5 most expensive services
+SELECT * FROM (
+    SELECT s.*, RANK() OVER (ORDER BY price DESC) AS rank
+    FROM Services s
+) WHERE rank <= 5;
+-- Find guests who have made more than 3 reservations
+SELECT guest_id, COUNT(*) AS total_reservations
+FROM Reservations
+GROUP BY guest_id
+HAVING COUNT(*) > 3;
+```
+```SQL
+-- Find rooms that have been reserved more than 3 times
+SELECT room_id, COUNT(*) AS total_bookings
+FROM Reservations
+GROUP BY room_id
+HAVING COUNT(*) > 3;
+-- Find reservations created in the past 7 days
+SELECT * FROM Reservations
+WHERE reservation_date >= SYSDATE - 7;
+```
+```SQL
+-- Retrieve reservations with guest and room details
+SELECT r.reservation_id, g.first_name, g.last_name, rm.room_number, r.check_in_date, r.check_out_date
+FROM Reservations r
+JOIN Guests g ON r.guest_id = g.guest_id
+JOIN Rooms rm ON r.room_id = rm.room_id;
+-- Find reservations created in the past 7 days
+SELECT * FROM Reservations
+WHERE reservation_date >= SYSDATE - 7;
+```
+```SQL
+-- Find payments made in the last 7 days
+SELECT * FROM Payments
+WHERE payment_date >= SYSDATE - 7;
+-- Get the top 5 highest-paid employees
+SELECT * FROM (
+    SELECT e.*, RANK() OVER (ORDER BY salary DESC) AS rank
+    FROM Employees e
+) WHERE rank <= 5;
+```
+
+6. Subqueries:
 We used subqueries to retrieve data based on nested queries:
 Get all members who have borrowed books in the year 2024.
 
-6. DCL (Data Control Language):
+7. DCL (Data Control Language):
 We used DCL commands to manage access control:
 GRANT: To give access privileges to a user.
 REVOKE: To remove access privileges from a user.
